@@ -12,6 +12,7 @@ class OptionsState extends MusicBeatState
 		'Graphics',
 		'Visuals',
 		'Gameplay'
+		'Admin Panel'
 		#if TRANSLATIONS_ALLOWED , 'Language' #end
 		,'Mobile Options'
 	];
