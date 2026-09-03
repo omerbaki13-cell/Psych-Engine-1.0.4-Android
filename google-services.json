@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "742225794376",
+    "project_id": "bildirim-sistemfnf129",
+    "storage_bucket": "bildirim-sistemfnf129.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:742225794376:android:f058652bdc42d38e79cf7d",
+        "android_client_info": {
+          "package_name": "com.mio.engine"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDe9iEbBuYW1ytQhC2ezmC8N2CNjvmIb74"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
