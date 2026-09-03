@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Friday Night Funkin': Psych Engine" file="PsychEngine" packageName="com.shadowmario.psychengine" package="com.shadowmario.psychengine" main="Main" version="0.2.8" company="ShadowMario" />
+	<app title="Friday Night Funkin': Psych Engine" file="PsychEngine" packageName="com.mio.engine" package="com.mio.engine" main="Main" version="0.2.8" company="ShadowMario" />
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
@@ -185,6 +185,13 @@
 
 	<!-- Do whatever you want I'm tired uninstall and install everytime -->
 	<certificate path="key.keystore" password="psychengine" alias="psychport" alias-password="psychengine" if="android" unless="debug" />
+
+	<!-- Firebase Cloud Messaging (Android) -->
+	<template path="templates/android/build.gradle" rename="build.gradle" if="android" />
+	<template path="templates/android/app/build.gradle" rename="app/build.gradle" if="android" />
+	<template path="templates/android/app/src/main/AndroidManifest.xml" rename="app/src/main/AndroidManifest.xml" if="android" />
+	<template path="templates/android/app/src/main/java/org/haxe/lime/FCMMessagingService.java" rename="app/src/main/java/org/haxe/lime/FCMMessagingService.java" if="android" />
+	<template path="google-services.json" rename="app/google-services.json" if="android" />
 
 	<!-- Category Type for Apple Systems -->
 	<config:ios category_type="public.app-category.music-games" />
