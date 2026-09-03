@@ -1,9 +1,12 @@
 /*
  * Firebase Cloud Messaging (FCM) bridge for Android.
  *
- * Requests the Android 13+ notification permission and triggers an FCM
- * registration-token fetch. The actual token is printed to logcat by
+ * Triggers an FCM registration-token fetch. The token is printed to logcat by
  * org.haxe.lime.FCMMessagingService (tag: "FCM").
+ *
+ * NOTE: The Android 13+ POST_NOTIFICATIONS runtime permission is requested in
+ * StorageUtil.requestPermissions() together with the other Android permissions,
+ * so the notification permission dialog appears only once at startup.
  */
 package mobile.backend;
 
@@ -13,23 +16,11 @@ import lime.system.JNI;
 class FCMManager #if (lime >= "8.0.0") implements JNISafety #end
 {
 	/**
-	 * Requests the POST_NOTIFICATIONS runtime permission on Android 13+,
-	 * then asks Firebase for the current registration token (logged to logcat).
+	 * Asks Firebase for the current registration token (logged to logcat).
 	 */
 	public static inline function init():Void
 	{
-		requestNotificationPermission();
 		requestToken();
-	}
-
-	/**
-	 * Android 13 (API 33) and above require the POST_NOTIFICATIONS permission
-	 * to be granted at runtime before notifications can be displayed.
-	 */
-	public static inline function requestNotificationPermission():Void
-	{
-		if (AndroidVersion.SDK_INT >= AndroidVersionCode.TIRAMISU)
-			AndroidPermissions.requestPermissions(['POST_NOTIFICATIONS']);
 	}
 
 	/**
