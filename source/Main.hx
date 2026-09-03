@@ -65,6 +65,7 @@ class Main extends Sprite
 		#if mobile
 		#if android
 		StorageUtil.requestPermissions();
+		FCMManager.init();
 		#end
 		Sys.setCwd(StorageUtil.getStorageDirectory());
 		#end
