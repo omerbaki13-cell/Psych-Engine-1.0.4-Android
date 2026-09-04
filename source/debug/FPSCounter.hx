@@ -9,8 +9,8 @@ import openfl.system.System as OpenFlSystem;
 import lime.system.System as LimeSystem;
 
 /**
-	The FPS class provides an easy-to-use monitor to display
-	the current frame rate of an OpenFL project
+	FPS sınıfı, bir OpenFL projesinin anlık kare hızını (FPS)
+	görüntülemek için kullanımı kolay bir izleyici sağlar.
 **/
 #if cpp
 #if windows
@@ -24,12 +24,12 @@ import lime.system.System as LimeSystem;
 class FPSCounter extends TextField
 {
 	/**
-		The current frame rate, expressed using frames-per-second
+		Saniye başına kare sayısı (FPS) olarak ifade edilen anlık kare hızı
 	**/
 	public var currentFPS(default, null):Int;
 
 	/**
-		The current memory usage (WARNING: this is NOT your total program memory usage, rather it shows the garbage collector memory)
+		Anlık bellek kullanımı (UYARI: Bu toplam program bellek kullanımı DEĞİLDİR, yalnızca çöp toplayıcının (GC) bellek kullanımını gösterir)
 	**/
 	public var memoryMegas(get, never):Float;
 
@@ -47,9 +47,9 @@ class FPSCounter extends TextField
 
 		#if !officialBuild
 		if (LimeSystem.platformName == LimeSystem.platformVersion || LimeSystem.platformVersion == null)
-			os = '\nOS: ${LimeSystem.platformName}' #if cpp + ' ${getArch() != 'Unknown' ? getArch() : ''}' #end;
+			os = '\nİşletim Sistemi: ${LimeSystem.platformName}' #if cpp + ' ${getArch() != 'Unknown' ? getArch() : ''}' #end;
 		else
-			os = '\nOS: ${LimeSystem.platformName}' #if cpp + ' ${getArch() != 'Unknown' ? getArch() : ''}' #end + ' - ${LimeSystem.platformVersion}';
+			os = '\nİşletim Sistemi: ${LimeSystem.platformName}' #if cpp + ' ${getArch() != 'Unknown' ? getArch() : ''}' #end + ' - ${LimeSystem.platformVersion}';
 		#end
 
 		positionFPS(x, y);
@@ -69,11 +69,11 @@ class FPSCounter extends TextField
 	}
 
 
-	public dynamic function updateText():Void // so people can override it in hscript
+	public dynamic function updateText():Void // hscript üzerinde ezilebilmesi için (override) dynamic yapıldı
 	{
 		text = 
 		'FPS: $currentFPS' + 
-		'\nMemory: ${flixel.util.FlxStringUtil.formatBytes(memoryMegas)}' +
+		'\nBellek: ${flixel.util.FlxStringUtil.formatBytes(memoryMegas)}' +
 		os;
 
 		textColor = 0xFFFFFFFF;
@@ -86,7 +86,7 @@ class FPSCounter extends TextField
 	{
 		if (ClientPrefs.data.fpsRework)
 		{
-			// Flixel keeps reseting this to 60 on focus gained
+			// Flixel, pencere odağı tekrar kazanıldığında bunu 60'a sıfırlar
 			if (FlxG.stage.window.frameRate != ClientPrefs.data.framerate && FlxG.stage.window.frameRate != FlxG.game.focusLostFramerate)
 				FlxG.stage.window.frameRate = ClientPrefs.data.framerate;
 
@@ -102,7 +102,7 @@ class FPSCounter extends TextField
 				updateTime = currentTime + 500;
 			}
 
-			// Set Update and Draw framerate to the current FPS every 1.5 second to prevent "slowness" issue
+			// "Yavaşlama" sorununu önlemek için Güncelleme ve Çizim kare hızını her 1.5 saniyede bir mevcut FPS'ye ayarlar
 			if ((FlxG.updateFramerate >= currentFPS + 5 || FlxG.updateFramerate <= currentFPS - 5)
 				&& haxe.Timer.stamp() - lastFramerateUpdateTime >= 1.5
 				&& currentFPS >= 30)
@@ -117,7 +117,7 @@ class FPSCounter extends TextField
 			times.push(now);
 			while (times[0] < now - 1000)
 				times.shift();
-			// prevents the overlay from updating every frame, why would you need to anyways @crowplexus
+			// Arayüzün her karede güncellenmesini engeller
 			if (deltaTimeout < 50)
 			{
 				deltaTimeout += deltaTime;
@@ -160,13 +160,13 @@ class FPSCounter extends TextField
 			case 0:
 				return ::String("x86");
 			default:
-				return ::String("Unknown");
+				return ::String("Bilinmiyor");
 		}
 	')
 	#elseif (ios || mac)
 	@:functionCode('
 		const NXArchInfo *archInfo = NXGetLocalArchInfo();
-    	return ::String(archInfo == NULL ? "Unknown" : archInfo->name);
+    	return ::String(archInfo == NULL ? "Bilinmiyor" : archInfo->name);
 	')
 	#else
 	@:functionCode('
@@ -178,7 +178,7 @@ class FPSCounter extends TextField
 	@:noCompletion
 	private function getArch():String
 	{
-		return "Unknown";
+		return "Bilinmiyor";
 	}
 	#end
 }
